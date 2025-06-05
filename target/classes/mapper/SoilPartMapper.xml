@@ -120,7 +120,6 @@
         SELECT 
         <include refid="Base_Column_List" />
         FROM trsh_part
-        LIMIT 100
     </select>
 
     <!-- 条件查询土壤分区信息 -->
@@ -178,8 +177,7 @@
         SELECT 
         <include refid="Base_Column_List" />
         FROM trsh_part
-        WHERE ST_Intersects(geom, ST_GeomFromText(#{wkt}, 3857))
-        LIMIT 100
+        WHERE ST_Within(geom, ST_GeomFromText(#{wkt}, 3857))
     </select>
     
     <!-- 查询酸化土壤信息（pH小于指定值） -->
