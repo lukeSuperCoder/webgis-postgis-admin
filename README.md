@@ -1,7 +1,7 @@
 # 福建省土壤信息服务平台后端
 
 ## 项目介绍
-该项目是福建省土壤信息服务平台的后端部分，使用Spring Boot + Spring MVC + MyBatis框架开发，数据库采用PostgreSQL+PostGIS。
+该项目是土壤信息服务平台的后端部分，使用Spring Boot + Spring MVC + MyBatis框架开发，数据库采用PostgreSQL+PostGIS。
 
 ## 技术栈
 - Java框架: Spring Boot 2.7.3
@@ -9,6 +9,7 @@
 - ORM框架: MyBatis
 - 数据库: PostgreSQL + PostGIS
 - 构建工具: Maven
+- API文档: SpringDoc OpenAPI (Swagger) 1.6.15
 
 ## 功能特性
 - 用户登录及用户信息管理功能
@@ -40,9 +41,21 @@
    ```bash
    mvn spring-boot:run
    ```
-3. 访问API：http://localhost:8080/soil-api/
+3. 访问API：http://localhost:8089/soil-api/
 
 ## API文档
+
+### Swagger接口文档
+项目集成了Swagger (OpenAPI 3.0) 接口文档工具，便于API测试：
+
+- Swagger UI界面: http://localhost:8089/soil-api/swagger-ui.html
+- API文档JSON: http://localhost:8089/soil-api/api-docs
+
+通过Swagger UI界面可以:
+- 查看所有API接口的详细说明
+- 在线测试接口功能
+- 查看请求和响应模型
+- 下载API文档
 
 ### 用户管理
 - 用户登录: `POST /soil-api/user/login`
@@ -62,6 +75,19 @@
 - 空间范围查询土壤信息: `GET /soil-api/soil/listByGeometry?wkt=...`
 - 查询酸化土壤信息: `GET /soil-api/soil/listAcidifiedSoil?phValue=...&wkt=...`
 - 统计分析: `GET /soil-api/soil/statistics?wkt=...`
+
+### 土壤分区管理 (新增)
+- 根据ID查询: `GET /soil-api/soil-part/get/{id}`
+- 查询列表: `GET /soil-api/soil-part/list`
+- 条件查询: `GET /soil-api/soil-part/listByCondition`
+- 区域查询: `GET /soil-api/soil-part/listByRegion?province=&city=&county=&town=`
+- 空间范围查询: `GET /soil-api/soil-part/listByGeometry?wkt=...`
+- 酸化土壤查询: `GET /soil-api/soil-part/listAcidifiedSoil?phValue=&year=`
+- pH变化查询: `GET /soil-api/soil-part/listByPhChange?period=&changeValue=`
+- 有机质含量查询: `GET /soil-api/soil-part/listByOrganicMatter?minValue=&maxValue=`
+- 土壤类型面积统计: `GET /soil-api/soil-part/statisticsByType`
+- 区域pH值统计: `GET /soil-api/soil-part/statisticsPhByRegion?level=&year=`
+- 区域内属性统计: `GET /soil-api/soil-part/statisticsByGeometry?wkt=...`
 
 ## 开发指南
 1. 拉取代码：`git clone [仓库地址]`
