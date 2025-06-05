@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soil.mapper.SoilPartMapper">
+
+    <!-- 结果映射，字段名映射到属性名 -->
+    <resultMap id="BaseResultMap" type="com.soil.entity.SoilPart">
+        <id column="id" property="id"/>
+        <result column="geom" property="geom"/>
+        <result column="join_count" property="joinCount"/>
+        <result column="target_fid" property="targetFid"/>
+        <result column="省名称" property="provinceName"/>
+        <result column="县名称" property="countyName"/>
+        <result column="乡名称" property="townName"/>
+        <result column="地类名称" property="landTypeName"/>
+        <result column="省土壤代码" property="provinceSoilCode"/>
+        <result column="省土壤名称" property="provinceSoilName"/>
+        <result column="省土类名称" property="provinceSoilTypeName"/>
+        <result column="省亚类名称" property="provinceSubSoilName"/>
+        <result column="省土属名称" property="provinceSoilAttrName"/>
+        <result column="省土种名称" property="provinceSoilBreedName"/>
+        <result column="耕层厚度" property="ploughLayerThickness"/>
+        <result column="障碍层厚度" property="barrierLayerThickness"/>
+        <result column="有机质" property="organicMatter"/>
+        <result column="碱解氮" property="alkalineNitrogen"/>
+        <result column="有效磷" property="availablePhosphorus"/>
+        <result column="速效钾" property="availablePotassium"/>
+        <result column="cec" property="cec"/>
+        <result column="缓效钾" property="slowReleasePotassium"/>
+        <result column="交换性钙" property="exchangeableCalcium"/>
+        <result column="交换性镁" property="exchangeableMagnesium"/>
+        <result column="坡度" property="slope"/>
+        <result column="坡向" property="aspect"/>
+        <result column="海拔" property="elevation"/>
+        <result column="国际制质地" property="internationalTexture"/>
+        <result column="耕层含盐量" property="ploughLayerSalt"/>
+        <result column="灌溉条件" property="irrigationCondition"/>
+        <result column="县土壤代码" property="countySoilCode"/>
+        <result column="粉粒" property="siltContent"/>
+        <result column="粘粒" property="clayContent"/>
+        <result column="砂砾" property="sandContent"/>
+        <result column="全氮" property="totalNitrogen"/>
+        <result column="排涝能力" property="drainageCapacity"/>
+        <result column="容重" property="bulkDensity"/>
+        <result column="密度" property="density"/>
+        <result column="市名称" property="cityName"/>
+        <result column="bsm1113" property="bsm1113"/>
+        <result column="极端低温jz" property="extremeLowTemp"/>
+        <result column="气候带" property="climateZone"/>
+        <result column="坡度2016" property="slope2016"/>
+        <result column="坡向2016" property="aspect2016"/>
+        <result column="hb" property="hb"/>
+        <result column="xm" property="xm"/>
+        <result column="氮肥施用量" property="nitrogenFertilizer"/>
+        <result column="82_08" property="change8208"/>
+        <result column="08_16" property="change0816"/>
+        <result column="f_area" property="fArea"/>
+        <result column="平差面积16" property="adjustedArea16"/>
+        <result column="年均温" property="annualTemperature"/>
+        <result column="年降水量" property="annualPrecipitation"/>
+        <result column="地貌" property="landform"/>
+        <result column="熟制" property="maturity"/>
+        <result column="磷肥施用量" property="phosphateFertilizer"/>
+        <result column="降雨ph" property="rainPh"/>
+        <result column="82ph" property="ph82"/>
+        <result column="08ph" property="ph08"/>
+        <result column="16ph" property="ph16"/>
+        <result column="82pa" property="pa82"/>
+        <result column="08pa" property="pa08"/>
+        <result column="16pa" property="pa16"/>
+        <result column="82_16ph" property="phChange8216"/>
+        <result column="82_16pa" property="paChange8216"/>
+        <result column="n" property="n"/>
+        <result column="p" property="p"/>
+        <result column="bsm" property="bsm"/>
+        <result column="土壤容重" property="soilBulkDensity"/>
+        <result column="石灰用量" property="limeDosage"/>
+        <result column="耕层厚度1" property="ploughLayerThickness1"/>
+        <result column="海拔分区" property="elevationZone"/>
+        <result column="道路间距" property="roadSpacing"/>
+        <result column="石灰分区" property="limeZone"/>
+        <result column="pa分区8208" property="paZone8208"/>
+        <result column="pa分区0816" property="paZone0816"/>
+        <result column="石灰分区1" property="limeZone1"/>
+        <result column="降水ph" property="precipitationPh"/>
+        <result column="酸化分区" property="acidificationZone"/>
+        <result column="道路分区" property="roadZone"/>
+        <result column="耕层厚度2" property="ploughLayerThickness2"/>
+        <result column="石灰" property="lime"/>
+        <result column="单位面积" property="unitArea"/>
+        <result column="海拔异常" property="elevationAnomaly"/>
+        <result column="石灰分区12" property="limeZone12"/>
+        <result column="石灰23" property="lime23"/>
+        <result column="gt_10_degr" property="gt10Degr"/>
+        <result column="xiang" property="xiang"/>
+    </resultMap>
+
+    <!-- 查询字段列表 -->
+    <sql id="Base_Column_List">
+        id, geom, join_count, target_fid, 省名称, 县名称, 乡名称, 地类名称, 省土壤代码, 省土壤名称, 
+        省土类名称, 省亚类名称, 省土属名称, 省土种名称, 耕层厚度, 障碍层厚度, 有机质, 碱解氮, 有效磷, 
+        速效钾, cec, 缓效钾, 交换性钙, 交换性镁, 坡度, 坡向, 海拔, 国际制质地, 耕层含盐量, 灌溉条件, 
+        县土壤代码, 粉粒, 粘粒, 砂砾, 全氮, 排涝能力, 容重, 密度, 市名称, bsm1113, 极端低温jz, 
+        气候带, 坡度2016, 坡向2016, hb, xm, 氮肥施用量, "82_08", "08_16", f_area, 平差面积16, 
+        年均温, 年降水量, 地貌, 熟制, 磷肥施用量, 降雨ph, "82ph", "08ph", "16ph", "82pa", "08pa", "16pa", 
+        "82_16ph", "82_16pa", n, p, bsm, 土壤容重, 石灰用量, 耕层厚度1, 海拔分区, 道路间距, 石灰分区, 
+        "pa分区8208", "pa分区0816", 石灰分区1, 降水ph, 酸化分区, 道路分区, 耕层厚度2, 石灰, 单位面积, 
+        海拔异常, 石灰分区12, 石灰23, gt_10_degr, xiang
+    </sql>
+
+    <!-- 根据ID查询土壤分区信息 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询土壤分区列表 -->
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        LIMIT 100
+    </select>
+
+    <!-- 条件查询土壤分区信息 -->
+    <select id="selectByCondition" parameterType="com.soil.entity.SoilPart" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        <where>
+            <if test="provinceName != null and provinceName != ''">
+                AND 省名称 LIKE CONCAT('%', #{provinceName}, '%')
+            </if>
+            <if test="cityName != null and cityName != ''">
+                AND 市名称 LIKE CONCAT('%', #{cityName}, '%')
+            </if>
+            <if test="countyName != null and countyName != ''">
+                AND 县名称 LIKE CONCAT('%', #{countyName}, '%')
+            </if>
+            <if test="townName != null and townName != ''">
+                AND 乡名称 LIKE CONCAT('%', #{townName}, '%')
+            </if>
+            <if test="landTypeName != null and landTypeName != ''">
+                AND 地类名称 LIKE CONCAT('%', #{landTypeName}, '%')
+            </if>
+            <if test="provinceSoilTypeName != null and provinceSoilTypeName != ''">
+                AND 省土类名称 LIKE CONCAT('%', #{provinceSoilTypeName}, '%')
+            </if>
+        </where>
+        LIMIT 100
+    </select>
+    
+    <!-- 根据行政区域查询土壤分区信息 -->
+    <select id="selectByRegion" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        <where>
+            <if test="province != null and province != ''">
+                AND 省名称 = #{province}
+            </if>
+            <if test="city != null and city != ''">
+                AND 市名称 = #{city}
+            </if>
+            <if test="county != null and county != ''">
+                AND 县名称 = #{county}
+            </if>
+            <if test="town != null and town != ''">
+                AND 乡名称 = #{town}
+            </if>
+        </where>
+        LIMIT 100
+    </select>
+    
+    <!-- 根据空间范围查询土壤分区信息 -->
+    <select id="selectByGeometry" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        WHERE ST_Intersects(geom, ST_GeomFromText(#{wkt}, 3857))
+        LIMIT 100
+    </select>
+    
+    <!-- 查询酸化土壤信息（pH小于指定值） -->
+    <select id="selectAcidifiedSoil" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        <where>
+            <choose>
+                <when test="year == '82'">
+                    "82ph" &lt; #{phValue}
+                </when>
+                <when test="year == '08'">
+                    "08ph" &lt; #{phValue}
+                </when>
+                <when test="year == '16'">
+                    "16ph" &lt; #{phValue}
+                </when>
+                <otherwise>
+                    "16ph" &lt; #{phValue}
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY 
+        <choose>
+            <when test="year == '82'">
+                "82ph"
+            </when>
+            <when test="year == '08'">
+                "08ph"
+            </when>
+            <when test="year == '16'">
+                "16ph"
+            </when>
+            <otherwise>
+                "16ph"
+            </otherwise>
+        </choose>
+        ASC
+        LIMIT 100
+    </select>
+    
+    <!-- 根据时间段查询土壤pH变化情况 -->
+    <select id="selectByPhChange" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        <where>
+            <choose>
+                <when test="period == '8208'">
+                    "82_08" &lt; #{changeValue}
+                </when>
+                <when test="period == '0816'">
+                    "08_16" &lt; #{changeValue}
+                </when>
+                <when test="period == '8216'">
+                    "82_16ph" &lt; #{changeValue}
+                </when>
+                <otherwise>
+                    "82_16ph" &lt; #{changeValue}
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY 
+        <choose>
+            <when test="period == '8208'">
+                "82_08"
+            </when>
+            <when test="period == '0816'">
+                "08_16"
+            </when>
+            <when test="period == '8216'">
+                "82_16ph"
+            </when>
+            <otherwise>
+                "82_16ph"
+            </otherwise>
+        </choose>
+        ASC
+        LIMIT 100
+    </select>
+    
+    <!-- 查询有机质含量满足条件的土壤信息 -->
+    <select id="selectByOrganicMatter" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM trsh_part
+        WHERE 有机质 BETWEEN #{minValue} AND #{maxValue}
+        ORDER BY 有机质 DESC
+        LIMIT 100
+    </select>
+    
+    <!-- 统计不同土壤类型的面积 -->
+    <select id="statisticsByType" resultType="java.util.Map">
+        SELECT 
+            省土类名称 AS soil_type_name,
+            SUM(COALESCE(f_area, 0)) AS total_area,
+            COUNT(*) AS count
+        FROM trsh_part
+        WHERE 省土类名称 IS NOT NULL
+        GROUP BY 省土类名称
+        ORDER BY total_area DESC
+    </select>
+    
+    <!-- 统计不同行政区域内土壤的平均pH值 -->
+    <select id="statisticsPhByRegion" resultType="java.util.Map">
+        SELECT 
+            <choose>
+                <when test="level == 'province'">
+                    省名称 AS region_name,
+                </when>
+                <when test="level == 'city'">
+                    市名称 AS region_name,
+                </when>
+                <when test="level == 'county'">
+                    县名称 AS region_name,
+                </when>
+                <when test="level == 'town'">
+                    乡名称 AS region_name,
+                </when>
+                <otherwise>
+                    县名称 AS region_name,
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="year == '82'">
+                    AVG("82ph") AS avg_ph,
+                    MIN("82ph") AS min_ph,
+                    MAX("82ph") AS max_ph,
+                    COUNT(*) AS count
+                </when>
+                <when test="year == '08'">
+                    AVG("08ph") AS avg_ph,
+                    MIN("08ph") AS min_ph,
+                    MAX("08ph") AS max_ph,
+                    COUNT(*) AS count
+                </when>
+                <when test="year == '16'">
+                    AVG("16ph") AS avg_ph,
+                    MIN("16ph") AS min_ph,
+                    MAX("16ph") AS max_ph,
+                    COUNT(*) AS count
+                </when>
+                <otherwise>
+                    AVG("16ph") AS avg_ph,
+                    MIN("16ph") AS min_ph,
+                    MAX("16ph") AS max_ph,
+                    COUNT(*) AS count
+                </otherwise>
+            </choose>
+        FROM trsh_part
+        WHERE 
+            <choose>
+                <when test="level == 'province'">
+                    省名称 IS NOT NULL
+                    GROUP BY 省名称
+                </when>
+                <when test="level == 'city'">
+                    市名称 IS NOT NULL
+                    GROUP BY 市名称
+                </when>
+                <when test="level == 'county'">
+                    县名称 IS NOT NULL
+                    GROUP BY 县名称
+                </when>
+                <when test="level == 'town'">
+                    乡名称 IS NOT NULL
+                    GROUP BY 乡名称
+                </when>
+                <otherwise>
+                    县名称 IS NOT NULL
+                    GROUP BY 县名称
+                </otherwise>
+            </choose>
+        ORDER BY avg_ph ASC
+    </select>
+    
+    <!-- 统计指定区域内土壤属性均值 -->
+    <select id="statisticsByGeometry" resultType="java.util.Map">
+        SELECT 
+            COUNT(*) AS total_count,
+            AVG(有机质) AS avg_organic_matter,
+            AVG(碱解氮) AS avg_alkaline_nitrogen,
+            AVG(有效磷) AS avg_available_phosphorus,
+            AVG(速效钾) AS avg_available_potassium,
+            AVG(全氮) AS avg_total_nitrogen,
+            AVG("82ph") AS avg_ph_82,
+            AVG("08ph") AS avg_ph_08,
+            AVG("16ph") AS avg_ph_16,
+            AVG("82_08") AS avg_ph_change_82_08,
+            AVG("08_16") AS avg_ph_change_08_16,
+            AVG("82_16ph") AS avg_ph_change_82_16,
+            SUM(COALESCE(f_area, 0)) AS total_area
+        FROM trsh_part
+        WHERE ST_Intersects(geom, ST_GeomFromText(#{wkt}, 3857))
+    </select>
+</mapper> 

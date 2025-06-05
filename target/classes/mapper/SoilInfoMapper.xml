@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soil.mapper.SoilInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.soil.entity.SoilInfo">
+        <id column="id" property="id"/>
+        <result column="plot_name" property="plotName"/>
+        <result column="ph" property="ph"/>
+        <result column="organic_matter" property="organicMatter"/>
+        <result column="total_nitrogen" property="totalNitrogen"/>
+        <result column="total_phosphorus" property="totalPhosphorus"/>
+        <result column="total_potassium" property="totalPotassium"/>
+        <result column="geometry" property="geometry"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="soil_type_code" property="soilTypeCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, plot_name, ph, organic_matter, total_nitrogen, total_phosphorus, 
+        total_potassium, geometry, region_code, soil_type_code, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.soil.entity.SoilInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_soil_info (
+            plot_name, ph, organic_matter, total_nitrogen, total_phosphorus, 
+            total_potassium, geometry, region_code, soil_type_code, create_time, update_time
+        )
+        values (
+            #{plotName}, #{ph}, #{organicMatter}, #{totalNitrogen}, #{totalPhosphorus}, 
+            #{totalPotassium}, #{geometry}, 
+            #{regionCode}, #{soilTypeCode}, now(), now()
+        )
+    </insert>
+
+    <update id="update" parameterType="com.soil.entity.SoilInfo">
+        update tb_soil_info
+        <set>
+            <if test="plotName != null">plot_name = #{plotName},</if>
+            <if test="ph != null">ph = #{ph},</if>
+            <if test="organicMatter != null">organic_matter = #{organicMatter},</if>
+            <if test="totalNitrogen != null">total_nitrogen = #{totalNitrogen},</if>
+            <if test="totalPhosphorus != null">total_phosphorus = #{totalPhosphorus},</if>
+            <if test="totalPotassium != null">total_potassium = #{totalPotassium},</if>
+            <if test="geometry != null">geometry = #{geometry},</if>
+            <if test="regionCode != null">region_code = #{regionCode},</if>
+            <if test="soilTypeCode != null">soil_type_code = #{soilTypeCode},</if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from tb_soil_info where id = #{id}
+    </delete>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_soil_info
+        where id = #{id}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_soil_info
+        order by create_time desc
+    </select>
+
+    <select id="selectListByCondition" parameterType="com.soil.entity.SoilInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_soil_info
+        <where>
+            <if test="plotName != null and plotName != ''">
+                and plot_name like concat('%', #{plotName}, '%')
+            </if>
+            <if test="ph != null">
+                and ph = #{ph}
+            </if>
+            <if test="regionCode != null and regionCode != ''">
+                and region_code = #{regionCode}
+            </if>
+            <if test="soilTypeCode != null and soilTypeCode != ''">
+                and soil_type_code = #{soilTypeCode}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <!-- 根据空间范围查询土壤信息 -->
+    <select id="selectByGeometry" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_soil_info
+        where ST_Intersects(geometry, ST_GeomFromText(#{wkt}, 4326))
+        order by create_time desc
+    </select>
+    
+    <!-- 根据条件查询酸化土壤信息 -->
+    <select id="selectAcidifiedSoil" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_soil_info
+        where ph &lt; #{phValue}
+        <if test="wkt != null and wkt != ''">
+            and ST_Intersects(geometry, ST_GeomFromText(#{wkt}, 4326))
+        </if>
+        order by ph asc
+    </select>
+    
+    <!-- 统计指定区域内土壤信息 -->
+    <select id="statisticsByGeometry" resultType="java.util.Map">
+        select 
+            count(*) as total_count,
+            avg(ph) as avg_ph,
+            avg(organic_matter) as avg_organic_matter,
+            avg(total_nitrogen) as avg_total_nitrogen,
+            avg(total_phosphorus) as avg_total_phosphorus,
+            avg(total_potassium) as avg_total_potassium,
+            sum(ST_Area(ST_Transform(geometry, 3857))) as total_area
+        from tb_soil_info
+        where ST_Intersects(geometry, ST_GeomFromText(#{wkt}, 4326))
+    </select>
+</mapper> 
