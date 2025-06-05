@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: soil-backend
+    ports:
+      - "8089:8089"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/gistable
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    restart: always
+
+  postgres:
+    image: docker.1ms.run/postgis/postgis:11-3.3
+    container_name: soil-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gistable
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./src/main/resources/db/trsh_part_insert.sql:/docker-entrypoint-initdb.d/02-trsh_part_insert.sql
+    restart: always
+
+volumes:
+  postgres_data: 
