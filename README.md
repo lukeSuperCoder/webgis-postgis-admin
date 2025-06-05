@@ -1,4 +1,4 @@
-# 福建省土壤信息服务平台后端
+# 土壤信息服务平台后端
 
 ## 项目介绍
 该项目是土壤信息服务平台的后端部分，使用Spring Boot + Spring MVC + MyBatis框架开发，数据库采用PostgreSQL+PostGIS。
