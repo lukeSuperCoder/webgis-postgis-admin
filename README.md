@@ -3,6 +3,9 @@
 ## 项目介绍
 该项目是土壤信息服务平台的后端部分，使用Spring Boot + Spring MVC + MyBatis框架开发，数据库采用PostgreSQL+PostGIS。
 
+## 项目关联
+- [土壤信息可视化平台前端](https://github.com/lukeSuperCoder/soil-map-platform)
+
 ## 技术栈
 - Java框架: Spring Boot 2.7.3
 - Web框架: Spring MVC
